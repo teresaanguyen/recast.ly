@@ -12,9 +12,10 @@ import VideoListEntry from './VideoListEntry.js';
 // );
 // console.log('SHOULD HAVE VIDEO DATA', exampleVideoData);
 var VideoList = (props) => (
-  <div>
-    {props.videoEntries.map(video =>
-      <VideoListEntry video={video} />
+  <div className="video-list">
+    {/* {console.log(props)} */}
+    {props.videos.map(video =>
+      <VideoListEntry video={video} key={video.id.videoId} />
     )}
   </div>
 );
@@ -24,7 +25,7 @@ var VideoList = (props) => (
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated
 VideoList.propTypes = {
-  videoEntries: PropTypes.array.isRequired
+  videos: PropTypes.array.isRequired
 };
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope.
