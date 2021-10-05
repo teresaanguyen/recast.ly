@@ -23,6 +23,29 @@ import VideoPlayer from './VideoPlayer.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentlyPlaying: exampleVideoData[0],
+      videoListEntries: exampleVideoData
+    };
+    this.onTitleClick = this.onTitleClick.bind(this);
+  }
+
+  onTitleClick(event) {
+    var title = event.currentTarget.textContent;
+    // console.log(title);
+    // console.log(exampleVideoData);
+    console.log(this.state);
+    for (var video of exampleVideoData) {
+      if (video.snippet.title === title) {
+        this.state.currentlyPlaying = video;
+      }
+    }
+    // exampleVideoData.forEach(function(video) {
+    //   if (video.snippet.title === title) {
+    //     this.state.currentlyPlaying = video;
+    //   }
+    // });
+
   }
 
   render() {
@@ -35,10 +58,16 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={exampleVideoData[0]}/>
+            <VideoPlayer
+              video={this.state.currentlyPlaying}
+              // state={this.state}
+            />
           </div>
           <div className="col-md-5" id="videolist">
-            <VideoList videos={exampleVideoData}/>
+            <VideoList
+              videos={exampleVideoData}
+              onTitleClick={this.onTitleClick}
+            />
           </div>
         </div>
       </div>

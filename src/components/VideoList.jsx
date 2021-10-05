@@ -15,7 +15,7 @@ var VideoList = (props) => (
   <div className="video-list">
     {/* {console.log(props)} */}
     {props.videos.map(video =>
-      <VideoListEntry video={video} key={video.id.videoId} />
+      <VideoListEntry video={video} key={video.id.videoId} onTitleClick={props.onTitleClick} />
     )}
   </div>
 );
