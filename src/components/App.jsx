@@ -1,6 +1,7 @@
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoPlayer from './VideoPlayer.js';
+import searchYouTube from '../lib/searchYouTube.js';
 
 // var App = () => (
 //   <div>
@@ -24,7 +25,40 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentlyPlaying: exampleVideoData[0],
+      currentlyPlaying: {
+        'kind': '',
+        'etag': '',
+        'id': {
+          'kind': '',
+          'videoId': ''
+        },
+        'snippet': {
+          'publishedAt': '',
+          'channelId': '',
+          'title': '',
+          'description': '',
+          'thumbnails': {
+            'default': {
+              'url': '',
+              'width': 120,
+              'height': 90
+            },
+            'medium': {
+              'url': '',
+              'width': 320,
+              'height': 180
+            },
+            'high': {
+              'url': '',
+              'width': 480,
+              'height': 360
+            }
+          },
+          'channelTitle': '',
+          'liveBroadcastContent': '',
+          'publishTime': ''
+        }
+      },
       videoListEntries: exampleVideoData
     };
     this.onTitleClick = this.onTitleClick.bind(this);
@@ -64,6 +98,11 @@ class App extends React.Component {
         </div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    var results = searchYouTube('cats', () => {});
+    console.log('this: ', results);
   }
 }
 // In the ES6 spec, files are "modules" and do not share a top-level scope
