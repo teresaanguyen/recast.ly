@@ -15,13 +15,11 @@ describe('VideoList', function() {
     var shallowRenderer = new ReactShallowRenderer();
 
     var oneFakeVideo = window.fakeVideoData.slice(-1);
-    console.log('fake video', oneFakeVideo);
     shallowRenderer.render(
       <VideoList videos={oneFakeVideo} />
     );
 
     var videoList = shallowRenderer.getRenderOutput();
-    console.log(videoList.props.children);
     expect(videoList.props.children).to.have.length(1);
     videoList.props.children.forEach(child => expect(child.type).to.equal(VideoListEntry));
   });
@@ -36,7 +34,6 @@ describe('VideoList', function() {
     );
 
     var videoList = shallowRenderer.getRenderOutput();
-    console.log('three fake video', videoList.props.children);
     expect(videoList.props.children).to.have.length(3);
     videoList.props.children.forEach(child => expect(child.type).to.equal(VideoListEntry));
   });
@@ -45,7 +42,6 @@ describe('VideoList', function() {
     var shallowRenderer = new ReactShallowRenderer();
 
     var fiveFakeVideos = window.fakeVideoData.slice(-5);
-    console.log('five fake video', fiveFakeVideos);
     shallowRenderer.render(
       <VideoList videos={fiveFakeVideos} />
     );
