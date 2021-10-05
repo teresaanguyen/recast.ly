@@ -1,3 +1,6 @@
+import VideoList from './VideoList.js';
+import exampleVideoData from '../data/exampleVideoData.js';
+
 var App = () => (
   <div>
     <nav className="navbar">
@@ -9,11 +12,12 @@ var App = () => (
       <div className="col-md-7">
         <div><h5><em>videoPlayer</em> view goes here</h5></div>
       </div>
-      <div className="col-md-5">
-        <div><h5><em>videoList</em> view goes here</h5></div>
+      <div className="col-md-5" id="videolist">
+        <VideoList videoEntries={exampleVideoData}/>
       </div>
     </div>
   </div>
+  // console.log('here', exampleVideoData)
 );
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope
