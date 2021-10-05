@@ -11,14 +11,13 @@ var App = () => (
     </nav>
     <div className="row">
       <div className="col-md-7">
-        <VideoPlayer />
+        <VideoPlayer video={exampleVideoData[0]}/>
       </div>
       <div className="col-md-5" id="videolist">
         <VideoList videos={exampleVideoData}/>
       </div>
     </div>
   </div>
-  // console.log('here', exampleVideoData)
 );
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope
