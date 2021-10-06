@@ -1,78 +1,34 @@
+import Search from './Search.js';
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoPlayer from './VideoPlayer.js';
 import searchYouTube from '../lib/searchYouTube.js';
 
-// var App = () => (
-//   <div>
-//     <nav className="navbar">
-//       <div className="col-md-6 offset-md-3">
-//         <div><h5><em>search</em> view goes here</h5></div>
-//       </div>
-//     </nav>
-//     <div className="row">
-//       <div className="col-md-7">
-//         <VideoPlayer video={exampleVideoData[0]}/>
-//       </div>
-//       <div className="col-md-5" id="videolist">
-//         <VideoList videos={exampleVideoData}/>
-//       </div>
-//     </div>
-//   </div>
-// );
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentlyPlaying: {
-        'kind': '',
-        'etag': '',
-        'id': {
-          'kind': '',
-          'videoId': ''
-        },
-        'snippet': {
-          'publishedAt': '',
-          'channelId': '',
-          'title': '',
-          'description': '',
-          'thumbnails': {
-            'default': {
-              'url': '',
-              'width': 120,
-              'height': 90
-            },
-            'medium': {
-              'url': '',
-              'width': 320,
-              'height': 180
-            },
-            'high': {
-              'url': '',
-              'width': 480,
-              'height': 360
-            }
-          },
-          'channelTitle': '',
-          'liveBroadcastContent': '',
-          'publishTime': ''
-        }
-      },
-      videoListEntries: exampleVideoData
+      currentVideo: null,
+      videos: []
     };
     this.onTitleClick = this.onTitleClick.bind(this);
+    this.getYouTubeVideos('cute puppy videos');
   }
 
-  onTitleClick(event) {
-    var title = event.currentTarget.textContent;
-    for (var video of exampleVideoData) {
-      if (video.snippet.title === title) {
-        this.setState({
-          currentlyPlaying: video
-        });
-      }
-    }
+  getYouTubeVideos(query) {
+    searchYouTube(query, (videos) =>
+      this.setState({
+        currentVideo: videos[0],
+        videos: videos,
+
+      })
+    );
+  }
+
+  onTitleClick(video) {
+    this.setState({
+      currentVideo: video, // e.target.innerText
+    });
   }
 
   render() {
@@ -80,18 +36,18 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search handleSearchInputChange={this.getYouTubeVideos.bind(this)} />
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
             <VideoPlayer
-              video={this.state.currentlyPlaying}
+              video={this.state.currentVideo}
             />
           </div>
           <div className="col-md-5" id="videolist">
             <VideoList
-              videos={exampleVideoData}
+              videos={this.state.videos}
               onTitleClick={this.onTitleClick}
             />
           </div>
@@ -100,10 +56,6 @@ class App extends React.Component {
     );
   }
 
-  componentDidMount() {
-    var results = searchYouTube('cats', () => {});
-    console.log('this: ', results);
-  }
 }
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
